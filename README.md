@@ -1,8 +1,8 @@
 Hi! I am James Couball! 😎
 
 * ⚡ I currently work at Yahoo as a Continuous Delivery Architect and Program Manager
-* <img src="images/ruby.png" width=16> I am really good at Ruby and Google Sheets.
-* I also know SQL, Javascript, Python, and Java.
+* I am an expert with <img src="images/ruby.png" width=16 style="padding-left: 3pt; padding-right: 1pt"> Ruby and <img src="images/sheets.png" height="16" style="padding-left: 3pt; padding-right: 1pt"> Google Sheets
+* I am also proficient with SQL, HTML, CSS, Javascript, Python, and Java.
 * I am currently learning more about Javascript.
 * 🔭 One of my 2022 goals is to contribute to more Open Source projects.
 * Fun fact: I love to spend time with family, play guitar, and play video games.
