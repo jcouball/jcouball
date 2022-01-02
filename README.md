@@ -1,16 +1,16 @@
-### Hi there 👋
+Hi! I am James Couball! 😎
 
-<!--
-**jcouball/jcouball** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+* ⚡ I currently work at Yahoo as a Continuous Delivery Architect and Program Manager
+* I am really good at Ruby and Google Sheets.
+* I also know SQL, Javascript, Python, and Java.
+* I am currently learning more about Javascript.
+* 🔭 One of my 2022 goals is to contribute to more Open Source projects.
+* Fun fact: I love to spend time with family, play guitar, and play video games.
 
-Here are some ideas to get you started:
+At work, I define enterprise transformation programs and write code to bring data from many 
+different enterprise systems to track these programs. I also work with teams to help them
+implement these transformation goals.
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+[![James Couball's GitHub Stats](https://github-readme-stats.vercel.app/api?username=jcouball&theme=dark&show_icons=true)](https://github.com/jcouball/github-readme-stats)
+
+[![James Couball's Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=jcouball&theme=dark&show_icons=true)](https://github.com/jcouball/github-readme-stats)
