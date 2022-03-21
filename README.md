@@ -8,6 +8,10 @@ As a Continuous Delivery Architect and Program Manager, I define enterprise tran
 
 I also work with teams to help them implement their transformation goals.
 
+## Latest Posts
+
+* 2022-03-21: [Defining Class Variables and Constants in Anonymous Classes](_posts/2022-03-21-defining-class-variables-and-constants-in-an-anonymous-class.md)
+
 ## Open Source
 
 I am the lead contributor to [the Ruby git gem](https://github.com/ruby-git/ruby-git).
