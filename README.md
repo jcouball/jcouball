@@ -16,7 +16,10 @@ I also work with teams to help them implement their transformation goals.
 
 I am the lead contributor to [the Ruby git gem](https://github.com/ruby-git/ruby-git).
 
-I have also contributed to other OpenSource projects such as [Rubocop](https://github.com/rubocop/rubocop/pull/1699), [YARD](https://github.com/lsegal/yard/pull/1419), [jira-ruby](https://github.com/sumoheavy/jira-ruby/pull/215).
+I have also contributed to other OpenSource projects such as [TruffleRuby](https://github.com/oracle/truffleruby/pull/2809), 
+[Rubocop](https://github.com/rubocop/rubocop/pull/1699), 
+[YARD](https://github.com/lsegal/yard/pull/1419), 
+[jira-ruby](https://github.com/sumoheavy/jira-ruby/pull/215).
 
 ## Skills
 
