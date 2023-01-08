@@ -16,10 +16,16 @@ I also work with teams to help them implement their transformation goals.
 
 I am the lead contributor to [the Ruby git gem](https://github.com/ruby-git/ruby-git).
 
-I have also contributed to other OpenSource projects such as [TruffleRuby](https://github.com/oracle/truffleruby/pull/2809), 
-[Rubocop](https://github.com/rubocop/rubocop/pull/1699), 
-[YARD](https://github.com/lsegal/yard/pull/1419), 
-[jira-ruby](https://github.com/sumoheavy/jira-ruby/pull/215).
+I have also contributed to many OpenSource projects
+
+| My Contributions | Project Description
+| ---------------- | -------------------
+| [jira-ruby](https://github.com/sumoheavy/jira-ruby/issues?q=author%3Ajcouball) | provides access to the [Atlassian JIRA REST API](https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/)
+| [JRuby](https://github.com/jruby/jruby/issues?q=author%3Ajcouball) | an implementation of the [Ruby programming language](https://www.ruby-lang.org/en/) atop the Java Virtual Machine (JVM)
+| [mkdocs-material](https://github.com/squidfunk/mkdocs-material/issues?q=author%3Ajcouball) | A [Material Design](https://material.io) theme for [MkDocs](https://www.mkdocs.org)
+| [Rubocop](https://github.com/rubocop/rubocop/issues?q=author%3Ajcouball) | a Ruby code style checker and formatter based on the community-driven [Ruby Style Guide](https://rubystyle.guide/)
+| [TruffleRuby](https://github.com/oracle/truffleruby/issues?q=author%3Ajcouball) | a [GraalVM](http://graalvm.org/) high-performance implementation of the [Ruby programming language](https://www.ruby-lang.org/en/)
+| [YARD](https://github.com/lsegal/yard/issues?q=author%3Ajcouball) | a documentation generation tool for the [Ruby programming language](https://www.ruby-lang.org/en/)
 
 ## Skills
 
