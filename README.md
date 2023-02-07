@@ -24,6 +24,7 @@ I have also contributed to many OpenSource projects
 | [JRuby](https://github.com/jruby/jruby/issues?q=author%3Ajcouball) | an implementation of the [Ruby programming language](https://www.ruby-lang.org/en/) atop the Java Virtual Machine (JVM)
 | [mkdocs-material](https://github.com/squidfunk/mkdocs-material/issues?q=author%3Ajcouball) | A [Material Design](https://material.io) theme for [MkDocs](https://www.mkdocs.org)
 | [Rubocop](https://github.com/rubocop/rubocop/issues?q=author%3Ajcouball) | a Ruby code style checker and formatter based on the community-driven [Ruby Style Guide](https://rubystyle.guide/)
+| [Ruby](https://bugs.ruby-lang.org/issues/19403) | Matz's Implementation of the [Ruby programming language](https://www.ruby-lang.org/en/) (aka MRI)
 | [TruffleRuby](https://github.com/oracle/truffleruby/issues?q=author%3Ajcouball) | a [GraalVM](http://graalvm.org/) high-performance implementation of the [Ruby programming language](https://www.ruby-lang.org/en/)
 | [YARD](https://github.com/lsegal/yard/issues?q=author%3Ajcouball) | a documentation generation tool for the [Ruby programming language](https://www.ruby-lang.org/en/)
 
