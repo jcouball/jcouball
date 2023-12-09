@@ -14,7 +14,22 @@ I also work with teams to help them implement their transformation goals.
 
 ## Open Source
 
-I am the lead contributor to [the Ruby git gem](https://github.com/ruby-git/ruby-git).
+I am the lead contributer or owner of the following gems:
+
+| Repository | Project Description
+| ---------- | -------------------
+| [ruby-git/ruby-git](https://github.com/ruby-git/ruby-git) | The Ruby git gem
+| **Google API Helpers** ||
+| [main-branch/discovery_v1](https://github.com/main-branch/discovery_v1) | Unofficial helpers, extensions, and examples for the Google Discovery V1 API
+| [main-branch/drive_v3](https://github.com/main-branch/drive_v3) | Unofficial helpers, extensions, and examples for the Google Drive V3 API
+| [main-branch/sheets_v4](https://github.com/main-branch/sheets_v4) | Unofficial helpers, extensions, and examples for the Google Sheets V4 API
+| **Continuous Integration Utilities** ||
+| [main-branch/create_github_release](https://github.com/main-branch/create_github_release) | A gem to manage releases of your gems including creating a release changelog as well as GitHub branch, PR, and release.
+| [main-branch/semverify](https://github.com/main-branch/semverify) | A replacement for the [bump](https://github.com/gregorym/bump) gem that parses and compares semver versions AND increments versions for Ruby Gems
+| [main-branch/github_pages_rake_tasks](https://github.com/main-branch/github_pages_rake_tasks) | Creates the rake task `github-pages:publish` which pushes the `doc` directory within the local copy of a repository to the same repository's `gh-pages` branch.
+| **Others** ||
+| [main-branch/process_executer](https://github.com/main-branch/process_executer) | An API for executing commands in a subprocess
+| [main-branch/active_model_persistence](https://github.com/main-branch/active_model_persistence) | A gem to add in-memory persistence to Models built with ActiveModel
 
 I have also contributed to many OpenSource projects
 
