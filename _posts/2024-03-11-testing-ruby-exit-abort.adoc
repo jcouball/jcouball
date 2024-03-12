@@ -1,0 +1,256 @@
+# Testing Ruby code that calls `abort` and `exit`
+James Couball
+:toc:
+
+Testing code that uses the `abort` or `exit` is a challenge for many developers.
+These methods are often used in command-line applications to terminate the program
+early and return an exit status to the operating system. Developers often encounter
+conflicting opinions and misleading advice when seeking clear guidance on this topic.
+
+This article demystifies the testing of such code, offering a simple and
+comprehensive approach for testing with both Minitest and RSpec.
+
+## How `Kernel#exit` and `Kernel#abort` work
+
+To effectively test code that calls `exit` and `abort`, it is important to first
+understand how these methods work.
+
+Both `exit` and `abort` raise a `SystemExit` exception. Here is a simplified version
+of the `exit` and `abort` methods to illustrate what they do:
+
+```ruby
+# @param status [Boolean, Integer] the exit status
+#
+#   If given an integer value, it is used as the program's exit status.
+#
+#   If given a Boolean value, the program's exit status is system dependent
+#   and is typically 0 for true and 1 for false.
+#
+def exit(status = true)
+  raise SystemExit.new(status, 'exit')
+end
+```
+
+```ruby
+def abort(message = nil)
+  $stderr.puts(message.to_s) if message
+  raise SystemExit.new(false, message)
+end
+```
+
+Like any other exception, if the `SystemExit` exception is propagated to the
+top-level of the program, it causes the program to terminate.
+
+What makes `SystemExit` different from other exceptions is that it gives some control
+over how the program is terminated. If a `SystemExit` exception is not handled,
+neither an error message nor a backtrace are output and the program exits with the
+exit status given in the exception.
+
+The `exit` method allows for a status code to be specified, which can indicate to the
+operating system or calling process that the program ended successfully or encountered an
+error.
+
+`exit`, `exit(true)` are equivalent and indicate that the program was successful. The
+program's exit status is set to a system-dependent value to indicate success. This
+value is 0 on Windows and Linux-like systems.
+
+`exit(false)` indicates that the program encountered an error.
+The program's exit status is set to a system-dependent value to indicate failure.
+This value is 1 on Windows and Linux-like systems.
+
+`exit` can be called with an integer value to set the program's exit status directly.
+Unless a specific value is needed, it is recommended to use `exit(true)` or `exit(false)`.
+
+The `abort` method always indicates an error in the program. It allows for a
+message to be given which is output to stderr BEFORE the exception is raised. This
+means that message is output even if the `SystemExit` exception is handled.
+
+After outputting the message, the `abort` method functions like `exit(false)`. The
+only difference is the raised exception's `message` attrribute is set to the message
+given to the `abort` method.
+
+## Testing code that calls `exit` and `abort`
+
+With this understanding of how the `exit` and `abort` methods work, you see that
+they are not as mysterious as they may seem at first. They are simply methods that
+raise a `SystemExit` exception with a status code and an optional message. In the
+case of `abort`, the message is printed to stderr before the exception is raised.
+
+This means that there are four things that can be tested in a program that calls
+`exit` or `abort`:
+
+1. That a `SystemExit` exception is raised
+2. That the exception `status` attribute is set to the expected integer value
+3. That the exception `message` attribute is set to the expected string value
+4. That the program output to stdout or stderr is as expected
+
+Rescuing the `SystemExit` exception (and not re-raising it) will allow the rest
+of the test suite to run without exiting.
+
+### Testing with Minitest
+
+The following code shows a few examples of testing the `exit` and `abort`
+methods using Minitest. It can be run by following these steps:
+
+1. Save the code to a file called `test_exit_abort.rb`
+2. Install the `minitest` gem if it isn't already installed
+3. Run the tests using the command `ruby test_exit_abort.rb`
+
+```ruby
+require 'minitest/autorun'
+
+class MyTests < Minitest::Test
+  # Use this approach to confirm that exit or abort was called. Note, however, that
+  # it does not enable testing for the exception's exit status, message, or any
+  # program output.
+  #
+  def test_exit
+    assert_raises(SystemExit) { exit }
+  end
+
+  # To test the exit status and message capture the exception returned from
+  # assert_raises and then check the status and message.
+  #
+  # The `exit` method sets the exception message to 'exit' -- this can not be changed.
+  #
+  def test_exit_status_and_message
+    exception = assert_raises(SystemExit) { exit(1) }
+    assert_equal(1, exception.status)
+    assert_equal('exit', exception.message)
+  end
+
+  # To test any output the program makes, use the assert_output method. This
+  # method takes two arguments, the first is the expected output to stdout and
+  # the second is the expected output to stderr. If you don't care about one of
+  # the outputs, you can pass nil for that argument.
+  #
+  def test_exit_and_output
+    exception = nil
+    assert_output(nil, "exit output\n") do
+      exception = assert_raises(SystemExit) { warn 'exit output'; exit(2) }
+    end
+    return unless exception
+
+    assert_equal(2, exception.status)
+    # The `exit` method sets the exception message to 'exit' -- this can not be changed.
+    assert_equal('exit', exception.message)
+  end
+
+  # The abort method outputs the given string to stderr and then raises a
+  # SystemExit exception. The exception status is 1 and the message is the
+  # string passed to the abort method.
+  #
+  def test_abort
+    exception = nil
+    assert_output(nil, "aborting the program\n") do
+      exception = assert_raises(SystemExit) { abort('aborting the program') }
+    end
+    return unless exception
+
+    assert_equal(1, exception.status) # abort always sets the status to 1
+    assert_equal('aborting the program', exception.message)
+  end
+end
+```
+
+### Testing with RSpec
+
+The following code shows similar examples of testing the `exit` and `abort`
+methods using RSpec. It can be run by following these steps:
+
+1. Save the code to a file called `exit_abort_spec.rb`
+2. Install the `rspec` gem if it isn't already installed
+3. Run the tests using the command `rspec --format=documentation exit_abort_spec.rb`
+
+Here are the same tests implemented with RSpec:
+
+```ruby
+RSpec.describe 'Kernel#exit and Kernel#abort' do
+  context 'when the exit method is called with no args' do
+    # If status and message are not important, you can use the raise_error matcher
+    #
+    it 'should raise a SystemExit exception' do
+      expect { exit }.to raise_error(SystemExit)
+    end
+  end
+
+  context 'when the exit method is called with true' do
+    # The raise_error matcher can take a block that allows you to test the
+    # exception's status and message.
+    #
+    # The `exit` method sets the exception message to 'exit' -- this can not be changed.
+    #
+    it 'should raise a SystemExit exception indicating success' do
+      expect { exit(true) }.to raise_error(SystemExit) do |exception|
+        expect(exception).to have_attributes(status: 0, success?: true, message: 'exit')
+      end
+    end
+  end
+
+  context 'when the exit method is called with false' do
+    it 'should raise a SystemExit exception indicating failure' do
+      expect { exit(false) }.to raise_error(SystemExit) do |exception|
+        expect(exception).to have_attributes(status: 1, success?: false, message: 'exit')
+      end
+    end
+  end
+
+  context 'when the exit method is called with 99' do
+    it 'should raise a SystemExit exception whose status is 99' do
+      expect { exit(99) }.to raise_error(SystemExit) do |exception|
+        expect(exception).to have_attributes(status: 99, success?: false, message: 'exit')
+      end
+    end
+  end
+
+  context 'when "Exiting" is output to stderr and exit is called with false' do
+    # The output matcher can be used to test the output to stdout and/or stderr.
+    # Wrap the code whose output you want to test in a block and pass that block
+    # to the expect method.
+    #
+    it 'should output "Exiting" to stderr and raise a SystemExit exception indicating failure' do
+      expect do
+        expect { warn 'Exiting'; exit(false) }.to raise_error(SystemExit) do |exception|
+          expect(exception).to have_attributes(status: 1, success?: false, message: 'exit')
+        end
+      end.to output("Exiting\n").to_stderr
+    end
+  end
+
+  context 'when abort is called given the message "Aborting"' do
+    # This test is structured similarly to the previous test, but instead of wrapping
+    # the code in a block, a compound expectation is used to test the output and the
+    # raised exception (joined below with the `and` method).
+    #
+    it 'should output "Aborting" to stderr and raise a SystemExit exception indicating failure' do
+      expect { abort('Aborting') }.to(
+        raise_error(SystemExit) do |exception|
+          expect(exception).to have_attributes(status: 1, success?: false, message: 'Aborting')
+        end.and(output("Aborting\n").to_stderr)
+      )
+    end
+  end
+end
+```
+
+## Conclusion
+
+Armed with the knowledge of how `exit` and `abort` work and with these test examples,
+you can confidently write tests for code that call these methods. This will help you
+to ensure that your code behaves as expected and that you can catch any unexpected
+exits before they cause problems in production.
+
+## Further exploration
+
+Embarking on this journey of mastering testing strategies for Ruby's `exit` and
+`abort` methods is just the beginning.
+
+To dive deeper and expand your testing prowess, I encourage you to explore resources
+such as
+link:https://pragprog.com/titles/rspec3/effective-testing-with-rspec-3/[Effective Testing with RSpec 3]
+by Myron Marston and Erin Dees, and the Ruby Testing Documentation for
+link:https://docs.seattlerb.org/minitest/[Minitest] and
+link:https://rspec.info/documentation/[RSpec].
+These resources can further enhance your understanding and skills.
+
+Knowledge is freedom!

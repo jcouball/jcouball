@@ -10,6 +10,7 @@ I also work with teams to help them implement their transformation goals.
 
 ## Latest Posts
 
+* 2024-03-11: [Testing Ruby code that calls `abort` and `exit`](_posts/2024-03-11-testing-ruby-exit-abort.adoc)
 * 2022-03-21: [Defining Class Variables and Constants in Anonymous Classes](_posts/2022-03-21-defining-class-variables-and-constants-in-an-anonymous-class.md)
 
 ## Open Source
