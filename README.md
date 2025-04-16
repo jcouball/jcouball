@@ -2,11 +2,17 @@
 
 ## Work
 
-I have worked for <img src="images/yahoo.svg" height="16" style="padding-left: 3pt; padding-right: 1pt"> Yahoo since 2004.
+I worked for <img src="images/yahoo.svg" height="16" style="padding-left: 3pt;
+padding-right: 1pt"> Yahoo from May 2004 to August 2024.
 
-As a Continuous Delivery Architect and Program Manager, I define enterprise transformation programs and write code to coalesce data from many different enterprise systems to track these programs.
+As a Continuous Delivery Architect and Program Manager, I defined enterprise
+transformation programs and wrote code to coalesce data from many different
+enterprise systems to track these programs.
 
-I also work with teams to help them implement their transformation goals.
+I also worked with teams to help them implement their transformation goals.
+
+I am currently unemployed and focused on finding a new job and spending more time on
+my open source projects.
 
 ## Latest Posts
 
