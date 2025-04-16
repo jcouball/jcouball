@@ -32,7 +32,7 @@ Actions](https://therubyist.org/2025/02/19/moving-a-ruby-gem-ci-to-github-action
 ## The original inspiration
 
 I was excited because Jonathan's post actually describes *How to implement Continuous
-Delivery for Ruby gem projects* (I think that Jonathan buried the lead for this
+Delivery for Ruby gem projects* (I think that Jonathan buried the lede for this
 article). The post uses two GitHub actions to achieve this result: the
 [googleapis/release-please-action](https://github.com/googleapis/release-please-action)
 and the [rubygems/release-gem](https://github.com/rubygems/release-gem) action.
