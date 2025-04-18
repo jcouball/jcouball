@@ -30,8 +30,8 @@ and the [rubygems/release-gem](https://github.com/rubygems/release-gem) action.
 I followed the instructions from Jonathan's blog (with a couple tweaks) for 13
 different open source gems that I maintain. You can read Jonathan's post to see what
 he recommended. See my [Continuous Delivery Implementation
-Runbook](#continuous-delivery-implementation-runbook) (below) for how I implemented
-these changes in my projects.
+Runbook](#continuous-delivery-implementation-runbook) (below) for step-by-step
+instructions you can follow to implement CD for your Ruby Gem projects.
 
 ## Additional changes I made
 
@@ -203,7 +203,7 @@ example, "0.1.0").
 
 ```json
 {
-".": "<last-release-version>"
+  ".": "<last-release-version>"
 }
 ```
 
