@@ -1,0 +1,6 @@
+{
+  "markdown.extension.toc.levels": "1..6",
+  "markdown.extension.toc.omittedFromToc": {
+    "_posts/2025-04-16-continuous-delivery-for-ruby-gems.md": ["## Table of Contents"]
+  }
+}

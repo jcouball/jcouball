@@ -2,24 +2,24 @@
 
 ## Table of Contents
 
-* [Table of Contents](#table-of-contents)
-* [Introduction](#introduction)
-* [The original inspiration](#the-original-inspiration)
-* [Additional changes I made](#additional-changes-i-made)
-    * [Change tag format to "v1.0.0"](#change-tag-format-to-v100)
-    * [Only create one tag per release](#only-create-one-tag-per-release)
-    * [Use sentence case for commits listed in the CHANGELOG](#use-sentence-case-for-commits-listed-in-the-changelog)
-* [Conclusion](#conclusion)
-* [Additional considerations](#additional-considerations)
-* [Continuous Delivery Implementation Runbook](#continuous-delivery-implementation-runbook)
-    * [1. Add `.github/workflows/release.yml` to the project](#1-add-githubworkflowsreleaseyml-to-the-project)
-    * [2. Add `.release-please-manifest.json` to the project](#2-add-release-please-manifestjson-to-the-project)
-    * [3. Add `release-please-config.json` to the project](#3-add-release-please-configjson-to-the-project)
-    * [4. Customize the `release` task in the project's `Rakefile`](#4-customize-the-release-task-in-the-projects-rakefile)
-    * [5. Add the `AUTO_RELEASE_TOKEN` secret for the project in GitHub](#5-add-the-auto_release_token-secret-for-the-project-in-github)
-    * [6. Create a PR with the changes above and merge it](#6-create-a-pr-with-the-changes-above-and-merge-it)
-    * [7. Add a trusted publisher for the gem in RubyGems.org](#7-add-a-trusted-publisher-for-the-gem-in-rubygemsorg)
-    * [8. Merge the release PR](#8-merge-the-release-pr)
+- [Continuous Delivery for Ruby Gems](#continuous-delivery-for-ruby-gems)
+  - [Introduction](#introduction)
+  - [The original inspiration](#the-original-inspiration)
+  - [Additional changes I made](#additional-changes-i-made)
+    - [Change tag format to "v1.0.0"](#change-tag-format-to-v100)
+    - [Only create one tag per release](#only-create-one-tag-per-release)
+    - [Use sentence case for commits listed in the CHANGELOG](#use-sentence-case-for-commits-listed-in-the-changelog)
+  - [Conclusion](#conclusion)
+  - [Additional considerations](#additional-considerations)
+  - [Continuous Delivery Implementation Runbook](#continuous-delivery-implementation-runbook)
+    - [1. Add `.github/workflows/release.yml` to the project](#1-add-githubworkflowsreleaseyml-to-the-project)
+    - [2. Add `.release-please-manifest.json` to the project](#2-add-release-please-manifestjson-to-the-project)
+    - [3. Add `release-please-config.json` to the project](#3-add-release-please-configjson-to-the-project)
+    - [4. Customize the `release` task in the project's `Rakefile`](#4-customize-the-release-task-in-the-projects-rakefile)
+    - [5. Add the `AUTO_RELEASE_TOKEN` secret for the project in GitHub](#5-add-the-auto_release_token-secret-for-the-project-in-github)
+    - [6. Create a PR with the changes above and merge it](#6-create-a-pr-with-the-changes-above-and-merge-it)
+    - [7. Add a trusted publisher for the gem in RubyGems.org](#7-add-a-trusted-publisher-for-the-gem-in-rubygemsorg)
+    - [8. Merge the release PR](#8-merge-the-release-pr)
 
 ## Introduction
 
@@ -116,8 +116,8 @@ Add this section after the packages section:
 
 ## Conclusion
 
-Now my release process is fully automated from commit-to-production (well, you have
-to merge the release PR).
+Now my release process is fully automated from commit-to-production. Well, almost:
+you have to merge the release PR.
 
 What I like about the Release Please action is that it will update the release PR as
 you merge other PRs to master. This means that you don't have to have a release per
@@ -129,15 +129,20 @@ I strongly recommend that you also implement this workflow for your own gems.
 
 ## Additional considerations
 
-I strongly recommend that your repository include a workflow to enforce that all
-commit messages conform to [the Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
-standard.
+I strongly recommend that your project enforce that all commit messages conform to
+[the Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+specification.
 
 This is crucial because release-please uses these commit types (like fix:, feat:,
 feat!: or BREAKING CHANGE:) to automatically determine the correct semantic version
 bump (patch, minor, major) and to generate accurate CHANGELOG entries.
 
-Stay tuned for a blog post about enforcing conventional commits for your project.
+release-please will ignore any commits that do not conform to convention commits. It
+will neither trigger a release for non-conforming commits nor list them in the
+CHANGELOG.
+
+Stay tuned for my next couple of blog post where I discuss how to add this
+enforcement to your projects.
 
 ## Continuous Delivery Implementation Runbook
 
@@ -222,11 +227,14 @@ If you have never released a version of this gem, just leave the json object emp
 
 Make the following replacements:
 
-* Replace `<commit-sha>` with the SHA of the last release (or leave off
-`bootstrap-sha` if this gem has never been released).
-* Replace `<gem-name>` with the name of your gem
-* Replace `<path>` with the path to the gem's version file (for example,
-`lib/metatron/version.rb`)
+- Replace `<commit-sha>` with the SHA of the last release (or leave off
+  `bootstrap-sha` if this gem has never been released).
+- Replace `<gem-name>` with the name of your gem
+- Replace `<path>` with the path to the gem's version file (for example,
+  `lib/metatron/version.rb`)
+
+I listed all the supported change types so they can be unhidden and to ensure they
+are consistent with the change types listed in the commitlint configuration.
 
 ```json
 {
@@ -288,50 +296,50 @@ work which includes updating the changelog, creating tags and creating pull requ
 
 The release workflow accesses this token in the `AUTO_RELEASE_TOKEN` secret.
 
-* Create a PAT. Either create a classic token with repo access or a fine-grained
+- Create a PAT. Either create a classic token with repo access or a fine-grained
   token with the following permissions:
-    * **Contents**: Read and Write
-    * **Metadata**: Read
-    * **Pull Requests**: Read and Write
-* Add the secret by navigating to the project's GitHub page and then selecting
+  - **Contents**: Read and Write
+  - **Metadata**: Read
+  - **Pull Requests**: Read and Write
+- Add the secret by navigating to the project's GitHub page and then selecting
     Settings -> Secrets and variables -> Actions -> Repository secrets -> New
     repository secret
-* Use `AUTO_RELEASE_TOKEN` for the secret name and the token you created as the
+- Use `AUTO_RELEASE_TOKEN` for the secret name and the token you created as the
     secret value.
 
 ### 6. Create a PR with the changes above and merge it
 
 Commit the changes above, create a PR, and merge it once the CI build is completed
 
-* Commit the changes you made above (on a branch)
-* Prefix the commit with 'fix:' so that a new release is created
-* Create a PR
-* Wait for the CI build to succeed
-* Merge the PR
+- Commit the changes you made above (on a branch)
+- Prefix the commit with 'fix:' so that a new release is created
+- Create a PR
+- Wait for the CI build to succeed
+- Merge the PR
 
 Verification:
 
-* Verify that the release workflow runs and creates a new release PR
+- Verify that the release workflow runs and creates a new release PR
 
 ### 7. Add a trusted publisher for the gem in RubyGems.org
 
 In order to publish the gem to rubygems.org, rubygems/release-gem action requires
 the gem have trusted publishing configured on RubyGems.org.
 
-* Login to Rubygems.org
-* Go to the page on RubyGems for the gem being published
-* In the "Links" section, click "Trusted publishers" and enter your password if
+- Login to Rubygems.org
+- Go to the page on RubyGems for the gem being published
+- In the "Links" section, click "Trusted publishers" and enter your password if
     prompted
-* Click the "Create" button and enter the publisher information
-* Trusted publisher type: Github Actions
-* **Repository owner**: `<github user or organization name>`
-* **Repository name**: `<github repository name>`
-* **Workflow filename**: release.yml
-* **Environment**: RubyGems (this must match what is in the `release.yml`)
+- Click the "Create" button and enter the publisher information
+- Trusted publisher type: Github Actions
+- **Repository owner**: `<github user or organization name>`
+- **Repository name**: `<github repository name>`
+- **Workflow filename**: release.yml
+- **Environment**: RubyGems (this must match what is in the `release.yml`)
 
 ### 8. Merge the release PR
 
 Verification:
 
-* Verify that the release workflow successfully pushes a new version of the gem to
+- Verify that the release workflow successfully pushes a new version of the gem to
     rubygems.org
