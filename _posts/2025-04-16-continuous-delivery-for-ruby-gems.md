@@ -1,26 +1,5 @@
 # Continuous Delivery for Ruby Gems
 
-## Table of Contents
-
-- [Continuous Delivery for Ruby Gems](#continuous-delivery-for-ruby-gems)
-  - [Introduction](#introduction)
-  - [The original inspiration](#the-original-inspiration)
-  - [Additional changes I made](#additional-changes-i-made)
-    - [Change tag format to "v1.0.0"](#change-tag-format-to-v100)
-    - [Only create one tag per release](#only-create-one-tag-per-release)
-    - [Use sentence case for commits listed in the CHANGELOG](#use-sentence-case-for-commits-listed-in-the-changelog)
-  - [Conclusion](#conclusion)
-  - [Additional considerations](#additional-considerations)
-  - [Continuous Delivery Implementation Runbook](#continuous-delivery-implementation-runbook)
-    - [1. Add `.github/workflows/release.yml` to the project](#1-add-githubworkflowsreleaseyml-to-the-project)
-    - [2. Add `.release-please-manifest.json` to the project](#2-add-release-please-manifestjson-to-the-project)
-    - [3. Add `release-please-config.json` to the project](#3-add-release-please-configjson-to-the-project)
-    - [4. Customize the `release` task in the project's `Rakefile`](#4-customize-the-release-task-in-the-projects-rakefile)
-    - [5. Add the `AUTO_RELEASE_TOKEN` secret for the project in GitHub](#5-add-the-auto_release_token-secret-for-the-project-in-github)
-    - [6. Create a PR with the changes above and merge it](#6-create-a-pr-with-the-changes-above-and-merge-it)
-    - [7. Add a trusted publisher for the gem in RubyGems.org](#7-add-a-trusted-publisher-for-the-gem-in-rubygemsorg)
-    - [8. Merge the release PR](#8-merge-the-release-pr)
-
 ## Introduction
 
 I have been slowly inching toward implementing Continuous Delivery for my open source
@@ -28,6 +7,17 @@ gems for a long time now. What finally got me over the line was a blog post by m
 friend [Jonathan Gnagy](https://therubyist.org/about-the-author/) titled [Moving a
 Ruby Gem's CI to GitHub
 Actions](https://therubyist.org/2025/02/19/moving-a-ruby-gem-ci-to-github-actions/).
+
+This article details my Ruby Gem Continuous Delivery implementation starting with
+Jonathan's blog post.
+
+## Contents
+
+- [The original inspiration](#the-original-inspiration)
+- [Additional changes I made](#additional-changes-i-made)
+- [Conclusion](#conclusion)
+- [Additional considerations](#additional-considerations)
+- [Continuous Delivery Implementation Runbook](#continuous-delivery-implementation-runbook)
 
 ## The original inspiration
 
@@ -137,9 +127,9 @@ This is crucial because release-please uses these commit types (like fix:, feat:
 feat!: or BREAKING CHANGE:) to automatically determine the correct semantic version
 bump (patch, minor, major) and to generate accurate CHANGELOG entries.
 
-release-please will ignore any commits that do not conform to convention commits. It
-will neither trigger a release for non-conforming commits nor list them in the
-CHANGELOG.
+Furthermore, release-please will ignore any commits that do not conform to convention
+commits. It will neither trigger a release for non-conforming commits nor list them
+in the CHANGELOG.
 
 Stay tuned for my next couple of blog post where I discuss how to add this
 enforcement to your projects.
