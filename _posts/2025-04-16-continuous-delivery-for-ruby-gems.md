@@ -151,54 +151,54 @@ Replace `<gem-name>` with the name of your gem:
 ---
 name: Release Gem
 description: |
-This workflow creates a new release on GitHub and publishes the gem to
-RubyGems.org.
+    This workflow creates a new release on GitHub and publishes the gem to
+    RubyGems.org.
 
-The workflow uses the `googleapis/release-please-action` to handle the
-release creation process and the `rubygems/release-gem` action to publish
-the gem to rubygems.org
+    The workflow uses the `googleapis/release-please-action` to handle the
+    release creation process and the `rubygems/release-gem` action to publish
+    the gem to rubygems.org
 
 on:
-push:
-    branches: ["main"]
+    push:
+        branches: ["main"]
 
-workflow_dispatch:
+    workflow_dispatch:
 
 jobs:
-release:
-    runs-on: ubuntu-latest
+    release:
+        runs-on: ubuntu-latest
 
-    environment:
-    name: RubyGems
-    url: https://rubygems.org/gems/<gem-name>
+        environment:
+        name: RubyGems
+        url: https://rubygems.org/gems/<gem-name>
 
-    permissions:
-    contents: write
-    pull-requests: write
-    id-token: write
+        permissions:
+        contents: write
+        pull-requests: write
+        id-token: write
 
-    steps:
-    - name: Checkout project
-        uses: actions/checkout@v4
+        steps:
+        - name: Checkout project
+            uses: actions/checkout@v4
 
-    - name: Create release
-        uses: googleapis/release-please-action@v4
-        id: release
-        with:
-        token: ${{ secrets.AUTO_RELEASE_TOKEN }}
-        config-file: release-please-config.json
-        manifest-file: .release-please-manifest.json
+        - name: Create release
+            uses: googleapis/release-please-action@v4
+            id: release
+            with:
+            token: ${{ secrets.AUTO_RELEASE_TOKEN }}
+            config-file: release-please-config.json
+            manifest-file: .release-please-manifest.json
 
-    - name: Setup ruby
-        uses: ruby/setup-ruby@v1
-        if: ${{ steps.release.outputs.release_created }}
-        with:
-        bundler-cache: true
-        ruby-version: ruby
+        - name: Setup ruby
+            uses: ruby/setup-ruby@v1
+            if: ${{ steps.release.outputs.release_created }}
+            with:
+            bundler-cache: true
+            ruby-version: ruby
 
-    - name: Push to RubyGems.org
-        uses: rubygems/release-gem@v1
-        if: ${{ steps.release.outputs.release_created }}
+        - name: Push to RubyGems.org
+            uses: rubygems/release-gem@v1
+            if: ${{ steps.release.outputs.release_created }}
 ```
 
 ### 2. Add `.release-please-manifest.json` to the project
@@ -230,26 +230,40 @@ Make the following replacements:
 
 ```json
 {
-    "bootstrap-sha": "<commit-sha>",
-    "packages": {
-        ".": {
-        "release-type": "ruby",
-        "package-name": "<gem-name>",
-        "changelog-path": "CHANGELOG.md",
-        "version-file": "<path>",
-        "bump-minor-pre-major": true,
-        "bump-patch-for-minor-pre-major": true,
-        "draft": false,
-        "prerelease": false,
-        "include-component-in-tag": false
-        }
-    },
-    "plugins": [
-        {
-        "type": "sentence-case"
-        }
-    ],
-    "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
+  "bootstrap-sha": "<commit-sha>",
+  "packages": {
+    ".": {
+      "release-type": "ruby",
+      "package-name": "<gem-name>",
+      "changelog-path": "CHANGELOG.md",
+      "version-file": "<path>",
+      "bump-minor-pre-major": true,
+      "bump-patch-for-minor-pre-major": true,
+      "draft": false,
+      "prerelease": false,
+      "include-component-in-tag": false,
+      "pull-request-title-pattern": "chore: release v${version}",
+      "changelog-sections": [
+        { "type": "feat",     "section": "Features",      "hidden": false },
+        { "type": "fix",      "section": "Bug Fixes",     "hidden": false },
+        { "type": "build",    "section": "Other Changes", "hidden": false },
+        { "type": "chore",    "section": "Other Changes", "hidden": false },
+        { "type": "ci",       "section": "Other Changes", "hidden": false },
+        { "type": "docs",     "section": "Other Changes", "hidden": false },
+        { "type": "perf",     "section": "Other Changes", "hidden": false },
+        { "type": "refactor", "section": "Other Changes", "hidden": false },
+        { "type": "revert",   "section": "Other Changes", "hidden": false },
+        { "type": "style",    "section": "Other Changes", "hidden": false },
+        { "type": "test",     "section": "Other Changes", "hidden": false }
+      ]
+    }
+  },
+  "plugins": [
+    {
+      "type": "sentence-case"
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
 }
 ```
 
