@@ -43,6 +43,7 @@ I have also contributed to many OpenSource projects
 
 | My Contributions | Project Description
 | ---------------- | -------------------
+| [yard-lint](https://github.com/mensfeld/yard-lint/issues?q=author%3Ajcouball) | A comprehensive linter for YARD documentation
 | [jira-ruby](https://github.com/sumoheavy/jira-ruby/issues?q=author%3Ajcouball) | provides access to the [Atlassian JIRA REST API](https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/)
 | [JRuby](https://github.com/jruby/jruby/issues?q=author%3Ajcouball) | an implementation of the [Ruby programming language](https://www.ruby-lang.org/en/) atop the Java Virtual Machine (JVM)
 | [mkdocs-material](https://github.com/squidfunk/mkdocs-material/issues?q=author%3Ajcouball) | A [Material Design](https://material.io) theme for [MkDocs](https://www.mkdocs.org)
